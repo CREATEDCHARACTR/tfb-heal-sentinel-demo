@@ -1,0 +1,20 @@
+name: Heal Sentinel
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  heal-sentinel:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: CREATEDCHARACTR/tfb-heal-sentinel@v0.1.1
+        with:
+          llm_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          severity_floor: high
+          block_merge_on_critical: 'false'
